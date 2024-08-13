@@ -1,0 +1,45 @@
+apiVersion: cloud-build-notifiers/v1
+kind: SMTPNotifier
+metadata:
+  name: zyy-test-smtp-notifier
+spec:
+  notification:
+    filter: build.status == Build.Status.SUCCESS
+    params:
+      buildStatus: $(build.status)
+    delivery:
+      server: smtp.gmail.com
+      port: "587"
+      sender: zyytestcloudbuild@gmail.com
+      from: zyytestcloudbuild@gmail.com
+      recipients:
+        - yiyingzhang@google.com
+        # optional: more emails here
+      password:
+        secretRef: smtp-password
+    template:
+      type: golang
+      content: |
+        <html>
+          <body>
+          <table>
+            <tbody>
+              <tr>
+                  <td>Build Name</td>
+                  <td>{{.Build.Name}}</td>
+              </tr>
+              <tr>
+                  <td>Build Status</td>
+                  <td>{{.Build.Status}}</td>
+              </tr>
+              <tr>
+                  <td>Build Log</td>
+                  <td>{{.Build.LogUrl}}</td>
+              </tr>
+            </tbody>
+          </table>
+          </body>
+        </html>
+  secrets:
+  - name: smtp-password
+    value: projects/yiyingzhang-gke-dev/secrets/test-cloud-build-email-notifier/versions/latest
