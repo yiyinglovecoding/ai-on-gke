@@ -10,8 +10,8 @@ spec:
     delivery:
       server: smtp.gmail.com
       port: "587"
-      sender: zyytestcloudbuild@gmail.com
-      from: zyytestcloudbuild@gmail.com
+      sender: zyytestcloudbuild1@gmail.com
+      from: zyytestcloudbuild1@gmail.com
       recipients:
         - yiyingzhang@google.com
         # optional: more emails here
@@ -42,4 +42,4 @@ spec:
         </html>
   secrets:
   - name: smtp-password
-    value: projects/yiyingzhang-gke-dev/secrets/test-cloud-build-email-notifier/versions/latest
+    value: projects/126707615764/secrets/test-cloud-build-email-notifier/versions/latest
