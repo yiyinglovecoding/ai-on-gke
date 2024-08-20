@@ -14,7 +14,7 @@
 
 steps:
   - id: 'validate platform'
-    name: 'gcr.io/$PROJECT_ID/terraform'
+    name: 'gcr.io/gke-ai-eco-dev/terraform'
     script: |
       terraform init -no-color
       terraform validate -no-color
@@ -22,7 +22,7 @@ steps:
     waitFor: ['-']
   
   - id: 'validate rag'
-    name: 'gcr.io/$PROJECT_ID/terraform'
+    name: 'gcr.io/gke-ai-eco-dev/terraform'
     script: |
       terraform init -no-color
       terraform validate -no-color
@@ -31,7 +31,7 @@ steps:
 
   # Create cluster to test ray, jupyterhub, rag
   - id: 'create gke cluster'
-    name: 'gcr.io/$PROJECT_ID/terraform'
+    name: 'gcr.io/gke-ai-eco-dev/terraform'
     env:
       - "KUBE_LOAD_CONFIG_FILE=false"
     entrypoint: 'sh'
@@ -58,7 +58,7 @@ steps:
     waitFor: ['validate platform', 'validate rag']
 
   - id: 'test rag'
-    name: 'gcr.io/$PROJECT_ID/terraform'
+    name: 'gcr.io/gke-ai-eco-dev/terraform'
     entrypoint: 'sh'
     secretEnv: ['KAGGLE_USERNAME', 'KAGGLE_KEY']
     args:
@@ -143,7 +143,7 @@ steps:
     waitFor: ['create gke cluster']
 
   - id: 'check result and clean up'
-    name: 'gcr.io/$PROJECT_ID/terraform'
+    name: 'gcr.io/gke-ai-eco-dev/terraform'
     entrypoint: 'bash'
     args:
       - '-c'
