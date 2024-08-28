@@ -1,0 +1,47 @@
+apiVersion: cloud-build-notifiers/v1
+kind: SMTPNotifier
+metadata:
+  name: zyy-test-smtp-notifier
+spec:
+  notification:
+    filter: build.status == Build.Status.FAILURE && build.build_trigger_id in ["66c7c11e-51cc-4b48-aca9-c1255f57958a", "7f679323-a550-4c58-9c6d-5ed9f52b75d2", "9e7acc5e-8d90-4d39-a110-a5ae4bb94854", "584d3937-149a-468e-a548-17cdab291a89"]
+    params:
+      buildStatus: $(build.status)
+    delivery:
+      server: smtp.gmail.com
+      port: "587"
+      sender: aiecocloudbuild@gmail.com
+      from: aiecocloudbuild@gmail.com
+      recipients:
+        - gongmax@google.com
+        - imreddy@google.com
+        - yiyingzhang@google.com
+        # optional: more emails here
+      password:
+        secretRef: smtp-password
+    template:
+      type: golang
+      content: |
+        <html>
+          <body>
+          <table>
+            <tbody>
+              <tr>
+                  <td>Build Name</td>
+                  <td>{{.Build.Name}}</td>
+              </tr>
+              <tr>
+                  <td>Build Status</td>
+                  <td>{{.Build.Status}}</td>
+              </tr>
+              <tr>
+                  <td>Build Log</td>
+                  <td>{{.Build.LogUrl}}</td>
+              </tr>
+            </tbody>
+          </table>
+          </body>
+        </html>
+  secrets:
+  - name: smtp-password
+    value: projects/142966328212/secrets/cloud-build-smtp-notifier/versions/latest
