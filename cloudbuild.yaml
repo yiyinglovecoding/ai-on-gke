@@ -100,11 +100,15 @@ steps:
         -auto-approve -no-color 
         echo "pass" > /workspace/user_result.txt
 
-        # Make sure pods are running
+        chmod +x /workspace/scripts/ci/wait_for_pods.sh
+        /workspace/scripts/ci/wait_for_pods.sh ml-$SHORT_SHA-$_BUILD_ID-ray 3000
+      
         kubectl wait --all pods -n ml-$SHORT_SHA-$_BUILD_ID-ray --for=condition=Ready --timeout=1200s
+        # Ray head's readinessProbe is not probing the head service today. Therefore the wait for ready above is not reliable.
+        sleep 60s
         kubectl port-forward -n ml-$SHORT_SHA-$_BUILD_ID-ray service/ray-cluster-kuberay-head-svc 8265:8265 &
         # Wait port-forwarding to take its place
-        sleep 5s
+        sleep 10s
 
         ray job submit \
         --address=http://127.0.0.1:8265 -- python -c "import ray; ray.init(); print(ray.cluster_resources())"
