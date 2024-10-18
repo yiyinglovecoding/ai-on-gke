@@ -203,17 +203,17 @@ module "kuberay-cluster" {
 
 
 # Assign resource quotas to Ray namespace to ensure that they don't overutilize resources
-resource "kubernetes_resource_quota" "ray_namespace_resource_quota" {
-  provider = kubernetes.ray
-  count    = var.disable_resource_quotas ? 0 : 1
-  metadata {
-    name      = "ray-resource-quota"
-    namespace = local.kubernetes_namespace
-  }
+# resource "kubernetes_resource_quota" "ray_namespace_resource_quota" {
+#   provider = kubernetes.ray
+#   count    = var.disable_resource_quotas ? 0 : 1
+#   metadata {
+#     name      = "ray-resource-quota"
+#     namespace = local.kubernetes_namespace
+#   }
 
-  spec {
-    hard = var.resource_quotas
-  }
+#   spec {
+#     hard = var.resource_quotas
+#   }
 
-  depends_on = [module.namespace]
-}
+#   depends_on = [module.namespace]
+# }

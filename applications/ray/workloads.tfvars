@@ -15,17 +15,17 @@
 
 ##common variables
 ## Need to pull this variables from tf output from previous platform stage
-project_id = "<your project ID>"
+project_id = "yiyingzhang-gke-dev"
 
 ## This is required for terraform to connect to GKE cluster and deploy workloads.
-cluster_name     = "<cluster name>"
-cluster_location = "us-central1"
+cluster_name     = "test-llm-a100"
+cluster_location = "us-west3-b"
 
 ## If terraform should create a new GKE cluster, fill in this section as well.
 ##    By default, a public autopilot GKE cluster will be created in the default network.
 ##    Set the autopilot_cluster variable to false to create a standard cluster instead.
 create_cluster    = false
-autopilot_cluster = true
+autopilot_cluster = false
 
 #######################################################
 ####    APPLICATIONS
@@ -37,15 +37,15 @@ kubernetes_namespace = "ai-on-gke"
 # Creates a google service account & k8s service account & configures workload identity with appropriate permissions.
 # Set to false & update the variable `workload_identity_service_account` to use an existing IAM service account.
 create_service_account            = true
-workload_identity_service_account = "ray-sa"
+workload_identity_service_account = "ray-llm-sa"
 
 # Bucket name should be globally unique.
 create_gcs_bucket               = true
-gcs_bucket                      = "ray-bucket-zydg"
+gcs_bucket                      = "ray-llm-bucket"
 create_ray_cluster              = true
 ray_cluster_name                = "ray-cluster"
 enable_grafana_on_ray_dashboard = false
-enable_gpu                      = false
+enable_gpu                      = true
 
 ## IAP config - if you choose to disable IAP authenticated access for your endpoints, ignore everthing below this line.
 create_brand  = false

@@ -45,7 +45,7 @@ resource "helm_release" "ray-cluster" {
       secret_name                       = var.db_secret_name
       cloudsql_instance_connection_name = local.cloudsql_instance_connection_name
       image                             = var.use_custom_image ? "us-central1-docker.pkg.dev/ai-on-gke/rag-on-gke/ray-image" : "rayproject/ray"
-      image_tag                         = var.enable_gpu ? "2.9.3-py310-gpu" : var.use_custom_image ? "2.9.3-py310-gpu" : "2.9.3-py310"
+      image_tag                         = var.enable_gpu ? "2.30.0-py310-gpu" : var.use_custom_image ? "2.30.0-py310-gpu" : "2.30.0-py310-gpu"
       resource_requests = var.enable_gpu ? {
         "cpu"               = "8"
         "memory"            = "32G"
@@ -74,7 +74,7 @@ resource "helm_release" "ray-cluster" {
         "iam.gke.io/gke-metadata-server-enabled" : "true"
         } : var.enable_gpu ? {
         "iam.gke.io/gke-metadata-server-enabled" : "true"
-        "cloud.google.com/gke-accelerator" : "nvidia-l4"
+        "cloud.google.com/gke-accelerator" : "nvidia-tesla-a100"
         } : var.enable_tpu ? {
         "iam.gke.io/gke-metadata-server-enabled" : "true"
         "cloud.google.com/gke-tpu-accelerator" : "tpu-v4-podslice"

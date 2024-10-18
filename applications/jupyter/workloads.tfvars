@@ -14,17 +14,17 @@
 
 ##common variables
 ## Need to pull this variables from tf output from previous infrastructure stage
-project_id = "<your project ID>"
+project_id = "yiyingzhang-gke-dev"
 
 ## This is required for terraform to connect to GKE cluster and deploy workloads.
-cluster_name     = "ml-cluster"
-cluster_location = "us-central1"
+cluster_name     = "test-llm-a100"
+cluster_location = "us-west3-b"
 
 ## If terraform should create a new GKE cluster, fill in this section as well.
 ##    By default, a public autopilot GKE cluster will be created in the default network.
 ##    Set the autopilot_cluster variable to false to create a standard cluster instead.
 create_cluster        = false
-autopilot_cluster     = true
+autopilot_cluster     = false
 cluster_membership_id = "" # required for private cluster, defaults to `cluster_name`
 
 #######################################################
@@ -33,8 +33,8 @@ cluster_membership_id = "" # required for private cluster, defaults to `cluster_
 
 ## JupyterHub variables
 kubernetes_namespace              = "ai-on-gke"
-create_gcs_bucket                 = true
-gcs_bucket                        = "gcs-bucket-<unique-suffix>" # Choose a globally unique bucket name.
+create_gcs_bucket                 = false
+gcs_bucket                        = "ray-llm-bucket" # Choose a globally unique bucket name.
 workload_identity_service_account = "jupyter-sa"
 
 # IAP Configs

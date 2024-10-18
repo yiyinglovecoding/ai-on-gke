@@ -130,12 +130,12 @@ module "gcs" {
 }
 
 # create namespace
-module "namespace" {
-  source           = "../../modules/kubernetes-namespace"
-  providers        = { helm = helm.jupyter }
-  namespace        = local.kubernetes_namespace
-  create_namespace = true
-}
+# module "namespace" {
+#   source           = "../../modules/kubernetes-namespace"
+#   providers        = { helm = helm.jupyter }
+#   namespace        = local.kubernetes_namespace
+#   create_namespace = false
+# }
 
 # Creates jupyterhub
 module "jupyterhub" {
@@ -164,5 +164,5 @@ module "jupyterhub" {
   k8s_backend_service_port = var.k8s_backend_service_port
   domain                   = var.domain
   members_allowlist        = var.members_allowlist != "" ? split(",", var.members_allowlist) : []
-  depends_on               = [module.gcs, module.namespace]
+  depends_on               = [module.gcs]
 }
