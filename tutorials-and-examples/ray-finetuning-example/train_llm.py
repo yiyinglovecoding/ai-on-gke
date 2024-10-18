@@ -24,7 +24,7 @@ import os
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = f"expandable_segments:True"
 model_id = "google/gemma-7b"
 revision = "float16"
-access_token = "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"
+access_token = <>
 use_gpu = True
 num_workers = 1
 batch_size = 3

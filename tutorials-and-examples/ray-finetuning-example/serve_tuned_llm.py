@@ -8,7 +8,7 @@ import os
 
 model_id = "google/gemma-7b"
 revision = "float16"
-access_token = "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"
+access_token = <>
 bucket_name = "ray-llm-bucket"
 # gcs_dir = "yiyingzhang/gemma-7b-test/TorchTrainer_2024-10-14_11-34-30/TorchTrainer_f750a_00000_0_2024-10-14_11-34-37/checkpoint_000002/checkpoint/"
 gcs_dir = "gemma-7b-it-zyy-test/TorchTrainer_2024-10-10_15-52-20/TorchTrainer_52635_00000_0_2024-10-10_15-52-27/checkpoint_000010/checkpoint/"
